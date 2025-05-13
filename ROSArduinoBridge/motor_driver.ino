@@ -81,6 +81,41 @@
       else if (reverse == 1) { analogWrite(RIGHT_MOTOR_BACKWARD, spd); analogWrite(RIGHT_MOTOR_FORWARD, 0); }
     }
   }
+  #elif defined BTS_MOTOR_DRIVER
+  #include "BTS7960.h"
+
+      BTS7960 right_motor_driver(L_EN_RIGHT_SIDE, R_EN_RIGHT_SIDE, L_PWM_RIGHT_SIDE, R_PWM_RIGHT_SIDE);
+      BTS7960 left_motor_driver(L_EN_LEFT_SIDE, R_EN_LEFT_SIDE, L_PWM_LEFT_SIDE, R_PWM_LEFT_SIDE);
+      
+      void initMotorController() {
+          // Enable both motor drivers
+          right_motor_driver.Enable();
+          left_motor_driver.Enable(); 
+        }
+
+
+      void setMotorSpeed(int i, int spd) {
+          unsigned char reverse = 0;
+
+          if (spd < 0) {
+              spd = -spd;
+              reverse = 1;
+          }
+          if (spd > MAX_PWM)
+              spd = MAX_PWM;
+
+          if (i == LEFT){
+            if (reverse == 0) { left_motor_driver.TurnRight(spd);}
+            else {left_motor_driver.TurnLeft(spd);}
+          }
+
+          else if (i == RIGHT)   {
+            if (reverse == 0) { right_motor_driver.TurnRight(spd);}
+            else {right_motor_driver.TurnLeft(spd);}
+          }
+
+      }
+
   
   void setMotorSpeeds(int leftSpeed, int rightSpeed) {
     setMotorSpeed(LEFT, leftSpeed);

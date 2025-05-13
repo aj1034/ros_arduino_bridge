@@ -28,43 +28,67 @@
     else return encoders.XAxisReset();
   }
 #elif defined(ARDUINO_ENC_COUNTER)
-  volatile long left_enc_pos = 0L;
-  volatile long right_enc_pos = 0L;
+  volatile long left_rear_enc_pos = 0L;
+  volatile long left_front_enc_pos = 0L;
+  volatile long right_rear_enc_pos = 0L;
+  volatile long right_front_enc_pos = 0L;
   static const int8_t ENC_STATES [] = {0,1,-1,0,-1,0,0,1,1,0,0,-1,0,-1,1,0};  //encoder lookup table
     
   /* Interrupt routine for LEFT encoder, taking care of actual counting */
   ISR (PCINT2_vect){
-  	static uint8_t enc_last=0;
-        
-	enc_last <<=2; //shift previous state two places
-	enc_last |= (PIND & (3 << 2)) >> 2; //read the current state into lowest 2 bits
+  	static uint8_t enc_rear_last=0;        
+	  enc_rear_last <<=2; //shift previous state two places
+	  enc_rear_last |= (PIND & (3 << 2)) >> 2; //read the current state into lowest 2 bits
   
-  	left_enc_pos += ENC_STATES[(enc_last & 0x0f)];
+  	left_rear_enc_pos += ENC_STATES[(enc_rear_last & 0x0f)];
+
+    static uint8_t enc_front_last=0;        
+	  enc_front_last <<=2; //shift previous state two places
+	  enc_front_last |= (PIND & (3 << 4)) >> 4; //read the current state into lowest 2 bits
+  
+  	left_front_enc_pos += ENC_STATES[(enc_front_last & 0x0f)];
   }
   
   /* Interrupt routine for RIGHT encoder, taking care of actual counting */
   ISR (PCINT1_vect){
-        static uint8_t enc_last=0;
-          	
-	enc_last <<=2; //shift previous state two places
-	enc_last |= (PINC & (3 << 4)) >> 4; //read the current state into lowest 2 bits
+    static uint8_t enc_rear_last=0;      	
+    enc_rear_last <<=2; //shift previous state two places
+	  enc_lrear_ast |= (PINC & (3 << 4)) >> 4; //read the current state into lowest 2 bits
   
-  	right_enc_pos += ENC_STATES[(enc_last & 0x0f)];
+  	right_rear_enc_pos += ENC_STATES[(enc_rear_last & 0x0f)];
+
+
+    static uint8_t enc_front_last=0;      	
+    enc_front_last <<=2; //shift previous state two places
+	  enc_front_last |= (PINC & (3 << 2)) >> 2; //read the current state into lowest 2 bits
+  
+  	right_front_enc_pos += ENC_STATES[(enc_front_last & 0x0f)];
   }
   
   /* Wrap the encoder reading function */
   long readEncoder(int i) {
-    if (i == LEFT) return left_enc_pos;
-    else return right_enc_pos;
+    if (i == LEFT_REAR) return left_rear_enc_pos;
+    else if (i== LEFT_FRONT) return left_front_enc_pos;
+    else if (i == RIGHT_REAR) return right_rear_enc_pos;
+    else return right_front_enc_pos;
   }
 
   /* Wrap the encoder reset function */
   void resetEncoder(int i) {
-    if (i == LEFT){
-      left_enc_pos=0L;
+    if (i == LEFT_REAR){
+      left_rear_enc_pos=0L;
       return;
-    } else { 
-      right_enc_pos=0L;
+    }
+    else if (i == LEFT_FRONT){
+      left_front_enc_pos=0L;
+      return;      
+    }
+    else if(i == RIGHT_REAR){
+      right_rear_enc_pos=0L;
+      return;
+    }
+    else { 
+      right_front_enc_pos=0L;
       return;
     }
   }
@@ -74,8 +98,10 @@
 
 /* Wrap the encoder reset function */
 void resetEncoders() {
-  resetEncoder(LEFT);
-  resetEncoder(RIGHT);
+  resetEncoder(LEFT_REAR);
+  resetEncoder(LEFT_FRONT);
+  resetEncoder(RIGHT_REAR);
+  resetEncoder(RIGHT_FRONT);
 }
 
 #endif
