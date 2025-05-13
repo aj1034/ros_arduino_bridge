@@ -98,7 +98,7 @@
 #ifdef USE_BASE
   /* Motor driver function definitions */
   #include "motor_driver.h"
-
+  #include "BTS7960.h"
   /* Encoder driver function definitions */
   #include "encoder_driver.h"
 

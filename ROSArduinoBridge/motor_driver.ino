@@ -93,7 +93,6 @@
           left_motor_driver.Enable(); 
         }
 
-
       void setMotorSpeed(int i, int spd) {
           unsigned char reverse = 0;
 
@@ -116,7 +115,6 @@
 
       }
 
-  
   void setMotorSpeeds(int leftSpeed, int rightSpeed) {
     setMotorSpeed(LEFT, leftSpeed);
     setMotorSpeed(RIGHT, rightSpeed);
