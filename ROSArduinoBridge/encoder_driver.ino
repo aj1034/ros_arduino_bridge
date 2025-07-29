@@ -53,7 +53,7 @@
   ISR (PCINT1_vect){
     static uint8_t enc_rear_last=0;      	
     enc_rear_last <<=2; //shift previous state two places
-	  enc_lrear_ast |= (PINC & (3 << 4)) >> 4; //read the current state into lowest 2 bits
+	  enc_rear_last |= (PINC & (3 << 4)) >> 4; //read the current state into lowest 2 bits
   
   	right_rear_enc_pos += ENC_STATES[(enc_rear_last & 0x0f)];
 
@@ -71,6 +71,11 @@
     else if (i== LEFT_FRONT) return left_front_enc_pos;
     else if (i == RIGHT_REAR) return right_rear_enc_pos;
     else return right_front_enc_pos;
+  }
+
+  long readEncoders(int i){
+    if(i == LEFT) return (readEncoder(LEFT_REAR) + readEncoder(LEFT_FRONT))/2;
+    else (readEncoder(RIGHT_REAR) + readEncoder(RIGHT_FRONT))/2;
   }
 
   /* Wrap the encoder reset function */

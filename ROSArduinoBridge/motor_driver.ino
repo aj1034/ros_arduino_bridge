@@ -82,7 +82,6 @@
     }
   }
   #elif defined BTS_MOTOR_DRIVER
-  #include "BTS7960.h"
 
       BTS7960 right_motor_driver(L_EN_RIGHT_SIDE, R_EN_RIGHT_SIDE, L_PWM_RIGHT_SIDE, R_PWM_RIGHT_SIDE);
       BTS7960 left_motor_driver(L_EN_LEFT_SIDE, R_EN_LEFT_SIDE, L_PWM_LEFT_SIDE, R_PWM_LEFT_SIDE);

@@ -199,9 +199,9 @@ int runCommand() {
     
 #ifdef USE_BASE
   case READ_ENCODERS:
-    Serial.print(readEncoder(LEFT));
+    Serial.print(readEncoders(LEFT));
     Serial.print(" ");
-    Serial.println(readEncoder(RIGHT));
+    Serial.println(readEncoders(RIGHT));
     break;
    case RESET_ENCODERS:
     resetEncoders();
