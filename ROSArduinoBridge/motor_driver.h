@@ -12,16 +12,16 @@
 #endif
 #ifdef BTS_MOTOR_DRIVER
 //RIGHT SIDE MOTORS
-#define R_PWM_RIGHT_SIDE 2 //PWM 2  //NEED TO CORRECT THIS
-#define L_PWM_RIGHT_SIDE 3 //PWM 3
-#define L_EN_RIGHT_SIDE  23 //23
-#define R_EN_RIGHT_SIDE  25 //25
+#define R_PWM_RIGHT_SIDE 9 //PWM 2  //NEED TO CORRECT THIS
+#define L_PWM_RIGHT_SIDE 6 //PWM 3
+#define L_EN_RIGHT_SIDE  7 //23
+#define R_EN_RIGHT_SIDE  8 //25
 
 //LEFT SIDE MOTORS
-#define R_PWM_LEFT_SIDE   4 //PWM 4
-#define L_PWM_LEFT_SIDE   5 //PWM 5
-#define L_EN_LEFT_SIDE   27 //27
-#define R_EN_LEFT_SIDE   29 //29
+#define R_PWM_LEFT_SIDE  11 //PWM 4
+#define L_PWM_LEFT_SIDE  10 //PWM 5
+#define L_EN_LEFT_SIDE   13 //27
+#define R_EN_LEFT_SIDE   12 //29
 
 #endif
 
